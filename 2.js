@@ -5,19 +5,35 @@
 
 // *Подсказка *
 // // Пример использования функции
-// const user = {
-// name: 'John Smith',
-// age: 30,
-// email: 'john@example.com'
-// };
+async function saveUserData(user) {
+    let response = await fetch("https://jsonplaceholder.typicode.com/users",
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(user)
+        }
+    );
+    if (response.ok) {
+        return response.json();
+    } else {
+        return new Error("Rejected");
+    }
+}
 
-// saveUserData(user)
-// .then(() => {
-// console.log('User data saved successfully');
-// })
-// .catch(error => {
-// console.log(error.message);
-// });
+const user = {
+    name: 'John Smith',
+    age: 30,
+    email: 'john@example.com'
+};
+saveUserData(user)
+    .then(() => {
+        console.log('User data saved successfully');
+    })
+    .catch(error => {
+        console.log(error.message);
+    });
 
 // saveUserData использует fetch для отправки данных о пользователе на удаленный сервер для сохранения. Она отправляет POST-запрос на URL-адрес /users с указанием типа содержимого application/json и сериализует объект с данными о пользователе в JSON-строку с помощью JSON.stringify(). Если запрос успешен (с кодом 200), функция разрешает промис. Если запрос неуспешен, функция отклоняет промис с сообщени
 
